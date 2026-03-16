@@ -1,0 +1,1 @@
+Place mysql-connector-java-8.0.33.jar here. Download from: https://dev.mysql.com/downloads/connector/j/

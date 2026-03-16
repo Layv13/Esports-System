@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- You may freely edit this file. See commented blocks below for -->
+<!-- some examples of how to customize the build.                   -->
+<project name="EsportsMS" default="run" basedir=".">
+    <description>Builds, tests, and runs the project EsportsMS.</description>
+    <import file="nbproject/build-impl.xml"/>
+
+    <target name="run" depends="jar">
+        <java jar="${dist.jar}" fork="true">
+            <jvmarg value="-Dawt.useSystemAAFontSettings=on"/>
+            <jvmarg value="-Dswing.aatext=true"/>
+        </java>
+    </target>
+</project>
