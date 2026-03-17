@@ -5,7 +5,12 @@ import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
-        // Use system look & feel as base, then override with custom theme
+        javax.swing.UIManager.put("OptionPane.messageFont", 
+        new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 14));
+    javax.swing.UIManager.put("OptionPane.buttonFont", 
+        new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 13));
+    javax.swing.UIManager.put("OptionPane.messageForeground", 
+        new java.awt.Color(241, 245, 249));
         try {
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
             // Global scroll-bar colors

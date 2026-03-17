@@ -44,12 +44,12 @@ public class ManagerOverviewPanel extends JPanel {
 
         // Stat cards
         statsRow.add(statCard("My Team",
-            team != null ? team.getName() : "No Team", UIConstants.ACCENT, "🎮"));
+            team != null ? team.getName() : "No Team", UIConstants.ACCENT, ""));
         statsRow.add(statCard("Players",
-            playerCount + " / 6", UIConstants.SUCCESS, "👥"));
+            playerCount + " / 6", UIConstants.SUCCESS, ""));
         statsRow.add(statCard("Status",
             team != null && team.isRegistered() ? "Registered" : "Not Registered",
-            team != null && team.isRegistered() ? UIConstants.SUCCESS : UIConstants.WARNING, "📋"));
+            team != null && team.isRegistered() ? UIConstants.SUCCESS : UIConstants.WARNING, ""));
 
         // Match info
         JLabel sec = UIHelper.sectionLabel("YOUR TOURNAMENT MATCHES");
@@ -85,54 +85,92 @@ public class ManagerOverviewPanel extends JPanel {
         return p;
     }
 
-    private JPanel buildMatchCard(Match m, Team myTeam) {
-        JPanel p = new JPanel(new GridBagLayout());
-        p.setBackground(UIConstants.BG_CARD);
-        p.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(UIConstants.BORDER, 1),
-            BorderFactory.createEmptyBorder(16, 16, 16, 16)
-        ));
+   private JPanel buildMatchCard(Match m, Team myTeam) {
+    JPanel p = new JPanel(new GridBagLayout());
+    p.setBackground(UIConstants.BG_CARD);
+    p.setBorder(BorderFactory.createCompoundBorder(
+        BorderFactory.createLineBorder(UIConstants.BORDER, 1),
+        BorderFactory.createEmptyBorder(0, 0, 16, 0)
+    ));
 
-        GridBagConstraints gc = new GridBagConstraints();
-        gc.fill = GridBagConstraints.HORIZONTAL;
-        gc.gridx = 0; gc.gridy = 0; gc.insets = new Insets(0,0,6,0);
+    GridBagConstraints gc = new GridBagConstraints();
+    gc.fill = GridBagConstraints.HORIZONTAL;
+    gc.gridx = 0;
 
-        // Round
-        JLabel round = new JLabel(m.getRoundLabel().toUpperCase());
-        round.setFont(UIConstants.FONT_SMALL);
-        round.setForeground(UIConstants.ACCENT_LIGHT);
-        p.add(round, gc);
+    // ── Pick image based on which match ───────────────────────────────
+    String imagePath;
+    if (m.getRound() == Match.Round.FINAL) {
+        imagePath = "/images/final.jpg";
+    } else if (m.getMatchNumber() == 1) {
+        imagePath = "/images/sf1.jpg";
+    } else {
+        imagePath = "/images/sf2.jpg";
+    }
 
-        // Teams
-        Team t1 = ctrl.getTeamById(m.getTeam1Id());
-        Team t2 = ctrl.getTeamById(m.getTeam2Id());
-        String n1 = t1 != null ? t1.getName() : "TBD";
-        String n2 = t2 != null ? t2.getName() : "TBD";
-
-        gc.gridy = 1;
-        JLabel vs = new JLabel("<html><b>" + n1 + "</b> vs <b>" + n2 + "</b></html>");
-        vs.setFont(UIConstants.FONT_BODY);
-        vs.setForeground(UIConstants.TEXT_PRIMARY);
-        p.add(vs, gc);
-
-        gc.gridy = 2; gc.insets = new Insets(8,0,0,0);
-        if (m.isFinished()) {
-            boolean myTeamWon = myTeam != null && myTeam.getId().equals(m.getWinnerId());
-            boolean myTeamInMatch = myTeam != null &&
-                (myTeam.getId().equals(m.getTeam1Id()) || myTeam.getId().equals(m.getTeam2Id()));
-
-            Color c = myTeamInMatch ? (myTeamWon ? UIConstants.SUCCESS : UIConstants.DANGER)
-                                     : UIConstants.TEXT_SECOND;
-            JLabel score = new JLabel(m.getScore1() + " — " + m.getScore2());
-            score.setFont(UIConstants.FONT_TITLE);
-            score.setForeground(c);
-            p.add(score, gc);
-        } else {
-            JLabel up = new JLabel("⏳ UPCOMING");
-            up.setFont(UIConstants.FONT_TITLE);
-            up.setForeground(UIConstants.WARNING);
-            p.add(up, gc);
+    // ── Show image at top ─────────────────────────────────────────────
+    gc.gridy = 0;
+    gc.insets = new Insets(0, 0, 12, 0);
+    try {
+        java.net.URL imgUrl = getClass().getResource(imagePath);
+        if (imgUrl != null) {
+            ImageIcon raw = new ImageIcon(imgUrl);
+            int origW = raw.getIconWidth();
+int origH = raw.getIconHeight();
+if (origW <= 0) origW = 300;
+if (origH <= 0) origH = 110;
+double ratio = Math.min(300.0 / origW, 110.0 / origH);
+int newW = (int)(origW * ratio);
+int newH = (int)(origH * ratio);
+Image scaled = raw.getImage()
+    .getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
+            JLabel imgLabel = new JLabel(new ImageIcon(scaled));
+            imgLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            p.add(imgLabel, gc);
         }
-        return p;
+    } catch (Exception e) { }
+
+    // ── Round label ───────────────────────────────────────────────────
+    gc.gridy = 1;
+    gc.insets = new Insets(0, 16, 6, 16);
+    JLabel round = new JLabel(m.getRoundLabel().toUpperCase());
+    round.setFont(UIConstants.FONT_SMALL);
+    round.setForeground(UIConstants.ACCENT_LIGHT);
+    p.add(round, gc);
+
+    // ── Teams ─────────────────────────────────────────────────────────
+    gc.gridy = 2;
+    Team t1 = ctrl.getTeamById(m.getTeam1Id());
+    Team t2 = ctrl.getTeamById(m.getTeam2Id());
+    String n1 = t1 != null ? t1.getName() : "TBD";
+    String n2 = t2 != null ? t2.getName() : "TBD";
+    JLabel vs = new JLabel("<html><b>" + n1 + "</b> vs <b>" + n2 + "</b></html>");
+    vs.setFont(UIConstants.FONT_BODY);
+    vs.setForeground(UIConstants.TEXT_PRIMARY);
+    p.add(vs, gc);
+
+    // ── Score ─────────────────────────────────────────────────────────
+    gc.gridy = 3;
+    gc.insets = new Insets(8, 16, 0, 16);
+    if (m.isFinished()) {
+        boolean myTeamInMatch = myTeam != null &&
+            (myTeam.getId().equals(m.getTeam1Id()) ||
+             myTeam.getId().equals(m.getTeam2Id()));
+        boolean myTeamWon = myTeam != null &&
+            myTeam.getId().equals(m.getWinnerId());
+        Color c = myTeamInMatch
+            ? (myTeamWon ? UIConstants.SUCCESS : UIConstants.DANGER)
+            : UIConstants.TEXT_SECOND;
+        JLabel score = new JLabel(m.getScore1() + " — " + m.getScore2());
+        score.setFont(UIConstants.FONT_TITLE);
+        score.setForeground(c);
+        p.add(score, gc);
+    } else {
+        JLabel up = new JLabel(" UPCOMING");
+        up.setFont(UIConstants.FONT_TITLE);
+        up.setForeground(UIConstants.WARNING);
+        p.add(up, gc);
+    }
+
+    return p;
     }
 }

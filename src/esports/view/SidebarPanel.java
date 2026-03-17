@@ -25,7 +25,7 @@ public class SidebarPanel extends JPanel {
         JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 18));
         logoPanel.setBackground(UIConstants.BG_SIDEBAR);
         logoPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
-        JLabel logo = new JLabel("⚔ " + logoText);
+        JLabel logo = new JLabel(" " + logoText);
         logo.setFont(UIConstants.FONT_LOGO);
         logo.setForeground(UIConstants.ACCENT);
         logoPanel.add(logo);
@@ -52,7 +52,7 @@ public class SidebarPanel extends JPanel {
         add(UIHelper.darkSeparator());
 
         // ── Logout ────────────────────────────────────────────────────────
-        JButton logoutBtn = makeNavBtn("⏻  Logout");
+        JButton logoutBtn = makeNavBtn("  Logout");
         logoutBtn.setForeground(UIConstants.DANGER);
         logoutBtn.addActionListener(e -> onLogout.run());
         add(logoutBtn);

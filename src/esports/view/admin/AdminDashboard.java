@@ -2,7 +2,7 @@ package esports.view.admin;
 
 import esports.model.Session;
 import esports.view.*;
-
+import esports.view.admin.ChangePasswordPanel;
 import javax.swing.*;
 import java.awt.*;
 
@@ -13,6 +13,7 @@ public class AdminDashboard extends JPanel {
     private static final String CARD_BRACKET   = "BRACKET";
     private static final String CARD_TEAMS     = "TEAMS";
     private static final String CARD_RESULTS   = "RESULTS";
+    private static final String CARD_CHANGEPASS = "CHANGEPASS";
 
     private final MainFrame        mainFrame;
     private final CardLayout       contentLayout = new CardLayout();
@@ -34,14 +35,17 @@ public class AdminDashboard extends JPanel {
 
     private void buildUI() {
         add(buildHeader(), BorderLayout.NORTH);
+        ChangePasswordPanel changePassPanel = new ChangePasswordPanel();
+        contentPanel.add(changePassPanel, CARD_CHANGEPASS);
 
-        // Sidebar
+       
         String[][] navItems = {
-            {"🏠  Overview",          CARD_OVERVIEW},
-            {"➕  Register Manager",  CARD_REGISTER},
-            {"🏆  Bracket",           CARD_BRACKET},
-            {"👥  All Teams",         CARD_TEAMS},
-            {"📋  Match Results",     CARD_RESULTS}
+            {"  Overview",          CARD_OVERVIEW},
+            {"  Register Manager",  CARD_REGISTER},
+            {"  Bracket",           CARD_BRACKET},
+            {"  All Teams",         CARD_TEAMS},
+            {" Match Results",     CARD_RESULTS},
+            {"  Change Password", CARD_CHANGEPASS},
         };
         SidebarPanel sidebar = new SidebarPanel(
             "ADMIN", key -> navigate(key), navItems,
@@ -82,7 +86,7 @@ public class AdminDashboard extends JPanel {
         header.add(headerTitle, BorderLayout.WEST);
 
         String name = Session.getInstance().getCurrentUser().getFullName();
-        JLabel user = new JLabel("🔒 " + name + "  [Admin]");
+        JLabel user = new JLabel(" " + name + "  [Admin]");
         user.setFont(UIConstants.FONT_BODY);
         user.setForeground(UIConstants.TEXT_SECOND);
         header.add(user, BorderLayout.EAST);
@@ -97,6 +101,9 @@ public class AdminDashboard extends JPanel {
             case CARD_BRACKET:  headerTitle.setText("Tournament Bracket");bracketPanel.refresh();   break;
             case CARD_TEAMS:    headerTitle.setText("All Teams");         teamsPanel.refresh();     break;
             case CARD_RESULTS:  headerTitle.setText("Match Results");     matchesPanel.refresh();   break;
+            case CARD_CHANGEPASS: 
+    headerTitle.setText("Change Password"); 
+    break;
         }
     }
 

@@ -31,7 +31,9 @@ public class LoginPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         pnlCard = new javax.swing.JPanel();
         lblTitle = new javax.swing.JLabel();
         lblSubtitle = new javax.swing.JLabel();
@@ -41,15 +43,20 @@ public class LoginPanel extends javax.swing.JPanel {
         pfPassword = new javax.swing.JPasswordField();
         btnLogin = new javax.swing.JButton();
         lblStatus = new javax.swing.JLabel();
+        btnForgotPassword = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(9, 11, 19));
+        setLayout(new java.awt.GridBagLayout());
 
         pnlCard.setBackground(new java.awt.Color(20, 25, 44));
+        pnlCard.setMaximumSize(new java.awt.Dimension(420, 490));
+        pnlCard.setMinimumSize(new java.awt.Dimension(420, 490));
+        pnlCard.setPreferredSize(new java.awt.Dimension(420, 490));
 
         lblTitle.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
         lblTitle.setForeground(new java.awt.Color(99, 102, 241));
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitle.setText("⚔  NEXUS CUP");
+        lblTitle.setText(" NEXUS CUP");
 
         lblSubtitle.setForeground(new java.awt.Color(71, 85, 105));
         lblSubtitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -61,6 +68,8 @@ public class LoginPanel extends javax.swing.JPanel {
 
         tfUsername.setBackground(new java.awt.Color(12, 16, 28));
         tfUsername.setForeground(new java.awt.Color(241, 245, 249));
+        tfUsername.setMaximumSize(new java.awt.Dimension(356, 42));
+        tfUsername.setPreferredSize(new java.awt.Dimension(356, 42));
 
         lblPasswordHeader.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         lblPasswordHeader.setForeground(new java.awt.Color(148, 163, 184));
@@ -68,6 +77,8 @@ public class LoginPanel extends javax.swing.JPanel {
 
         pfPassword.setBackground(new java.awt.Color(12, 16, 28));
         pfPassword.setForeground(new java.awt.Color(241, 245, 249));
+        pfPassword.setMaximumSize(new java.awt.Dimension(356, 42));
+        pfPassword.setPreferredSize(new java.awt.Dimension(356, 42));
         pfPassword.addActionListener(this::pfPasswordActionPerformed);
 
         btnLogin.setBackground(new java.awt.Color(99, 102, 241));
@@ -77,10 +88,20 @@ public class LoginPanel extends javax.swing.JPanel {
         btnLogin.setBorderPainted(false);
         btnLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnLogin.setFocusPainted(false);
+        btnLogin.setMaximumSize(new java.awt.Dimension(356, 46));
+        btnLogin.setPreferredSize(new java.awt.Dimension(356, 46));
         btnLogin.addActionListener(this::btnLoginActionPerformed);
 
         lblStatus.setForeground(new java.awt.Color(239, 68, 68));
         lblStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        btnForgotPassword.setBackground(new java.awt.Color(30, 38, 60));
+        btnForgotPassword.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnForgotPassword.setForeground(new java.awt.Color(148, 163, 184));
+        btnForgotPassword.setText("Forgot Password?");
+        btnForgotPassword.setBorderPainted(false);
+        btnForgotPassword.setFocusPainted(false);
+        btnForgotPassword.addActionListener(this::btnForgotPasswordActionPerformed);
 
         javax.swing.GroupLayout pnlCardLayout = new javax.swing.GroupLayout(pnlCard);
         pnlCard.setLayout(pnlCardLayout);
@@ -89,32 +110,36 @@ public class LoginPanel extends javax.swing.JPanel {
             .addGroup(pnlCardLayout.createSequentialGroup()
                 .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlCardLayout.createSequentialGroup()
-                        .addGap(178, 178, 178)
+                        .addGap(151, 151, 151)
                         .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblUsernameHeader)
+                            .addComponent(tfUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(pfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnlCardLayout.createSequentialGroup()
+                        .addGap(226, 226, 226)
+                        .addComponent(lblUsernameHeader))
+                    .addGroup(pnlCardLayout.createSequentialGroup()
+                        .addGap(179, 179, 179)
+                        .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblTitle)
                             .addGroup(pnlCardLayout.createSequentialGroup()
-                                .addGap(2, 2, 2)
-                                .addComponent(lblPasswordHeader))))
-                    .addGroup(pnlCardLayout.createSequentialGroup()
-                        .addGap(112, 112, 112)
-                        .addComponent(lblTitle))
-                    .addGroup(pnlCardLayout.createSequentialGroup()
-                        .addGap(134, 134, 134)
-                        .addComponent(lblSubtitle))
-                    .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlCardLayout.createSequentialGroup()
-                            .addGap(99, 99, 99)
-                            .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(pfPassword)
-                                .addComponent(tfUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlCardLayout.createSequentialGroup()
-                            .addGap(177, 177, 177)
-                            .addComponent(btnLogin))))
-                .addContainerGap(102, Short.MAX_VALUE))
+                                .addGap(6, 6, 6)
+                                .addComponent(lblSubtitle)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCardLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lblStatus)
-                .addGap(193, 193, 193))
+                .addGap(0, 81, Short.MAX_VALUE)
+                .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCardLayout.createSequentialGroup()
+                        .addComponent(lblStatus)
+                        .addGap(193, 193, 193))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCardLayout.createSequentialGroup()
+                        .addComponent(lblPasswordHeader)
+                        .addGap(226, 226, 226))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCardLayout.createSequentialGroup()
+                        .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(79, 79, 79))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCardLayout.createSequentialGroup()
+                        .addComponent(btnForgotPassword)
+                        .addGap(188, 188, 188))))
         );
         pnlCardLayout.setVerticalGroup(
             pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,37 +148,30 @@ public class LoginPanel extends javax.swing.JPanel {
                 .addComponent(lblTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblSubtitle)
-                .addGap(24, 24, 24)
-                .addComponent(lblUsernameHeader)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
-                .addComponent(lblPasswordHeader)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
-                .addComponent(btnLogin)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblUsernameHeader)
+                .addGap(18, 18, 18)
+                .addComponent(tfUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41)
+                .addComponent(lblPasswordHeader)
+                .addGap(26, 26, 26)
+                .addComponent(pfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
                 .addComponent(lblStatus)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnForgotPassword)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addComponent(pnlCard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(72, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(88, 88, 88)
-                .addComponent(pnlCard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(95, Short.MAX_VALUE))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 96;
+        gridBagConstraints.ipady = 25;
+        gridBagConstraints.insets = new java.awt.Insets(88, 65, 95, 72);
+        add(pnlCard, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void pfPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pfPasswordActionPerformed
@@ -177,9 +195,26 @@ public class LoginPanel extends javax.swing.JPanel {
     }
     }//GEN-LAST:event_btnLoginActionPerformed
 
+    private void btnForgotPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnForgotPasswordActionPerformed
+        javax.swing.UIManager.put("OptionPane.messageFont", 
+        new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 14));
+    javax.swing.UIManager.put("OptionPane.buttonFont", 
+        new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 13));
+
+    javax.swing.JOptionPane.showMessageDialog(this,
+        "Please contact your system administrator\n" +
+        "to reset your password.\n\n" +
+        "Admin can reset passwords from the\n" +
+        "Register Manager panel.",
+        "Forgot Password",
+        javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_btnForgotPasswordActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnForgotPassword;
     private javax.swing.JButton btnLogin;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel lblPasswordHeader;
     private javax.swing.JLabel lblStatus;
     private javax.swing.JLabel lblSubtitle;

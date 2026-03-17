@@ -18,7 +18,7 @@ public class DatabaseConnection {
                                             + "&allowPublicKeyRetrieval=true"
                                             + "&serverTimezone=UTC";
     private static final String DB_USER     = "root";
-    private static final String DB_PASSWORD = "root";        // ← your MySQL root password
+    private static final String DB_PASSWORD = "123456789";        // ← your MySQL root password
     // ─────────────────────────────────────────────────────────────────────
 
     private static DatabaseConnection instance;

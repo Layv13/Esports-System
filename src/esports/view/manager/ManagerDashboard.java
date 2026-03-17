@@ -2,7 +2,7 @@ package esports.view.manager;
 
 import esports.model.Session;
 import esports.view.*;
-
+import esports.view.manager.ChangePasswordPanel;
 import javax.swing.*;
 import java.awt.*;
 
@@ -32,9 +32,9 @@ public class ManagerDashboard extends JPanel {
         add(buildHeader(), BorderLayout.NORTH);
 
         String[][] navItems = {
-            {"🏠  Overview",       CARD_OVERVIEW},
-            {"🎮  My Team",        CARD_TEAM},
-            {"📋  Match Results",  CARD_RESULTS}
+            {"  Overview",       CARD_OVERVIEW},
+            {"  My Team",        CARD_TEAM},
+            {"  Match Results",  CARD_RESULTS}
         };
         SidebarPanel sidebar = new SidebarPanel(
             "MANAGER", key -> navigate(key), navItems,
@@ -70,7 +70,7 @@ public class ManagerDashboard extends JPanel {
         header.add(headerTitle, BorderLayout.WEST);
 
         String name = Session.getInstance().getCurrentUser().getFullName();
-        JLabel user = new JLabel("🧑‍💼 " + name + "  [Team Manager]");
+        JLabel user = new JLabel(" " + name + "  [Team Manager]");
         user.setFont(UIConstants.FONT_BODY);
         user.setForeground(UIConstants.TEXT_SECOND);
         header.add(user, BorderLayout.EAST);

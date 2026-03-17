@@ -4,10 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * DataStore — replaces the old in-memory store with live MySQL queries.
- * Every method hits the database; no data is cached in Java.
- */
+
 public class DataStore {
 
     private static DataStore instance;
@@ -23,16 +20,12 @@ public class DataStore {
         return DatabaseConnection.getInstance().getConnection();
     }
 
-    // ================================================================
-    //  ID GENERATION
-    // ================================================================
+    
     public String generateId() {
         return String.valueOf(System.currentTimeMillis() % 100000);
     }
 
-    // ================================================================
-    //  USERS
-    // ================================================================
+    
     public User findUserByUsername(String username) {
         String sql = "SELECT * FROM users WHERE username = ?";
         try (PreparedStatement ps = conn().prepareStatement(sql)) {
@@ -97,9 +90,7 @@ public class DataStore {
         }
     }
 
-    // ================================================================
-    //  TEAMS
-    // ================================================================
+   
     public List<Team> getTeams() {
         List<Team> list = new ArrayList<>();
         try (Statement st = conn().createStatement();
@@ -167,9 +158,7 @@ public class DataStore {
         return t;
     }
 
-    // ================================================================
-    //  PLAYERS
-    // ================================================================
+   
     public List<Player> getPlayersByTeam(String teamId) {
         List<Player> list = new ArrayList<>();
         String sql = "SELECT * FROM players WHERE team_id = ?";
@@ -205,9 +194,7 @@ public class DataStore {
         } catch (SQLException e) { e.printStackTrace(); return false; }
     }
 
-    // ================================================================
-    //  TOURNAMENT
-    // ================================================================
+    
     public Tournament getTournament() {
         try (Statement st = conn().createStatement();
              ResultSet rs = st.executeQuery("SELECT * FROM tournaments LIMIT 1")) {

@@ -58,14 +58,14 @@ public class BracketPanel extends JPanel {
             // Layout constants
             int boxW  = 220;
             int boxH  = 52;
-            int lx    = 60;          // left column x
-            int rx    = w - 60 - boxW; // right column x
-            int mx    = lx + boxW + (rx - lx - boxW) / 2 - 1; // midpoint x for lines
+            int lx    = 60;         
+            int rx    = w - 60 - boxW; 
+            int mx    = lx + boxW + (rx - lx - boxW) / 2 - 1; 
 
-            int sf1Y1 = h / 2 - 180; // SF1 team1 y
-            int sf1Y2 = sf1Y1 + 100; // SF1 team2 y
-            int sf2Y1 = h / 2 + 50;  // SF2 team1 y
-            int sf2Y2 = sf2Y1 + 100; // SF2 team2 y
+            int sf1Y1 = h / 2 - 180; 
+            int sf1Y2 = sf1Y1 + 100; 
+            int sf2Y1 = h / 2 + 50;  
+            int sf2Y2 = sf2Y1 + 100; 
             int finY  = (sf1Y1 + sf1Y2 + boxH + sf2Y1 + sf2Y2 + boxH) / 4 - boxH / 2;
 
             // -- Draw section labels --
@@ -86,12 +86,12 @@ public class BracketPanel extends JPanel {
             g2.setColor(UIConstants.BORDER);
 
             if (sf1 != null) {
-                int sf1MidY = sf1Y1 + boxH / 2 + 50; // winner row mid
-                // horizontal from sf1 winner to midpoint
+                int sf1MidY = sf1Y1 + boxH / 2 + 50; 
+                
                 g2.drawLine(lx + boxW, sf1MidY, mx, sf1MidY);
-                // vertical up to final
+              
                 g2.drawLine(mx, sf1MidY, mx, finY + boxH / 2);
-                // horizontal to final box
+                
                 g2.drawLine(mx, finY + boxH / 2, rx, finY + boxH / 2);
             }
             if (sf2 != null) {
@@ -166,58 +166,93 @@ public class BracketPanel extends JPanel {
             // Winner crown
             if (winner) {
                 g2.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-                g2.drawString("👑", x + bw - 34, y + bh / 2 + 6);
+                g2.drawString("", x + bw - 34, y + bh / 2 + 6);
             }
         }
 
         private void drawFinal(Graphics2D g2, Match m, int x, int y, int bw, int bh) {
-            Team t1 = ctrl.getTeamById(m.getTeam1Id());
-            Team t2 = ctrl.getTeamById(m.getTeam2Id());
-            String n1 = t1 != null ? t1.getName() : "TBD";
-            String n2 = t2 != null ? t2.getName() : "TBD";
+             Tournament t   = ctrl.getTournament();
+    Match sf1      = t.getSemifinal1();
+    Match sf2      = t.getSemifinal2();
 
-            // Outer glow frame
-            g2.setColor(new Color(99, 102, 241, 25));
-            g2.fill(new RoundRectangle2D.Float(x - 6, y - 6, bw + 12, bh * 2 + 56, 14, 14));
-            g2.setColor(UIConstants.ACCENT);
-            g2.setStroke(new BasicStroke(2f));
-            g2.draw(new RoundRectangle2D.Float(x - 6, y - 6, bw + 12, bh * 2 + 56, 14, 14));
+    String n1, n2;
 
-            // "GRAND FINAL" accent bar
-            g2.setColor(UIConstants.ACCENT);
-            g2.fillRoundRect(x, y - 30, bw, 24, 6, 6);
-            g2.setFont(UIConstants.FONT_NAV);
-            g2.setColor(Color.WHITE);
-            FontMetrics fm = g2.getFontMetrics();
-            String gf = "★  GRAND FINAL  ★";
-            g2.drawString(gf, x + (bw - fm.stringWidth(gf)) / 2, y - 30 + 17);
+    // Only show real finalist names if semis are FINISHED
+    if (sf1 != null && sf1.isFinished() && sf1.getWinnerId() != null) {
+        Team winner1 = ctrl.getTeamById(sf1.getWinnerId());
+        n1 = winner1 != null ? winner1.getName() : "TBD";
+    } else {
+        n1 = "TBD — SF1 Winner";
+    }
 
-            if (m.isFinished()) {
-                drawMatch(g2, m, x, y, y + bh + 20, bw, bh, true);
-                // Champion banner
-                Team winner = ctrl.getTeamById(m.getWinnerId());
-                if (winner != null) {
-                    g2.setColor(UIConstants.GOLD);
-                    g2.setFont(new Font("Segoe UI", Font.BOLD, 14));
-                    String champ = "🏆 CHAMPION: " + winner.getName();
-                    fm = g2.getFontMetrics();
-                    g2.drawString(champ, x + (bw - fm.stringWidth(champ)) / 2,
-                                  y + bh * 2 + 40);
-                }
-            } else {
-                // Upcoming - show both finalists
-                drawUpcomingTeam(g2, n1, x, y, bw, bh);
-                drawUpcomingTeam(g2, n2, x, y + bh + 20, bw, bh);
+    if (sf2 != null && sf2.isFinished() && sf2.getWinnerId() != null) {
+        Team winner2 = ctrl.getTeamById(sf2.getWinnerId());
+        n2 = winner2 != null ? winner2.getName() : "TBD";
+    } else {
+        n2 = "TBD — SF2 Winner";
+    }
 
-                // Upcoming badge
-                g2.setColor(UIConstants.WARNING);
-                g2.setFont(UIConstants.FONT_NAV);
-                String up = "⏳ UPCOMING MATCH";
-                fm = g2.getFontMetrics();
-                g2.drawString(up, x + (bw - fm.stringWidth(up)) / 2, y + bh * 2 + 42);
-            }
+    // Outer glow frame
+    g2.setColor(new Color(99, 102, 241, 25));
+    g2.fill(new RoundRectangle2D.Float(x - 6, y - 6, bw + 12, bh * 2 + 56, 14, 14));
+    g2.setColor(UIConstants.ACCENT);
+    g2.setStroke(new BasicStroke(2f));
+    g2.draw(new RoundRectangle2D.Float(x - 6, y - 6, bw + 12, bh * 2 + 56, 14, 14));
+
+    // Grand Final accent bar
+    g2.setColor(UIConstants.ACCENT);
+    g2.fillRoundRect(x, y - 30, bw, 24, 6, 6);
+    g2.setFont(UIConstants.FONT_NAV);
+    g2.setColor(Color.WHITE);
+    FontMetrics fm = g2.getFontMetrics();
+    String gf = "★  GRAND FINAL  ★";
+    g2.drawString(gf, x + (bw - fm.stringWidth(gf)) / 2, y - 30 + 17);
+
+    if (m.isFinished()) {
+        // Show actual scores with winner
+        drawTeamBox(g2, x, y, bw, bh, n1, m.getScore1(),
+            m.getTeam1Id().equals(m.getWinnerId()), true);
+        drawTeamBox(g2, x, y + bh + 20, bw, bh, n2, m.getScore2(),
+            m.getTeam2Id().equals(m.getWinnerId()), true);
+
+        // Champion banner
+        Team champ = ctrl.getTeamById(m.getWinnerId());
+        if (champ != null) {
+            g2.setColor(UIConstants.GOLD);
+            g2.setFont(new Font("Segoe UI", Font.BOLD, 14));
+            String champStr = "🏆 CHAMPION: " + champ.getName();
+            fm = g2.getFontMetrics();
+            g2.drawString(champStr,
+                x + (bw - fm.stringWidth(champStr)) / 2,
+                y + bh * 2 + 40);
         }
 
+    } else {
+        // Show upcoming — with real names OR TBD
+        drawUpcomingTeam(g2, n1, x, y,          bw, bh);
+        drawUpcomingTeam(g2, n2, x, y + bh + 20, bw, bh);
+
+        // Show different message depending on state
+        g2.setFont(UIConstants.FONT_NAV);
+        fm = g2.getFontMetrics();
+
+        if ("TBD — SF1 Winner".equals(n1) || "TBD — SF2 Winner".equals(n2)) {
+            // Semis not done yet
+            g2.setColor(UIConstants.TEXT_MUTED);
+            String waiting = "Awaiting semifinal results...";
+            g2.drawString(waiting,
+                x + (bw - fm.stringWidth(waiting)) / 2,
+                y + bh * 2 + 42);
+        } else {
+            // Both semis done, final is ready
+            g2.setColor(UIConstants.WARNING);
+            String up = "⏳ UPCOMING MATCH";
+            g2.drawString(up,
+                x + (bw - fm.stringWidth(up)) / 2,
+                y + bh * 2 + 42);
+        }
+        }
+        }
         private void drawUpcomingTeam(Graphics2D g2, String name, int x, int y, int bw, int bh) {
             g2.setColor(UIConstants.BG_CARD2);
             g2.fill(new RoundRectangle2D.Float(x, y, bw, bh, 10, 10));

@@ -28,11 +28,11 @@ public class AdminOverviewPanel extends JPanel {
 
         JPanel center = UIHelper.darkPanel(new BorderLayout(0, 20));
 
-        // Stat cards
+        
         statsRow = UIHelper.darkPanel(new GridLayout(1, 4, 16, 0));
         center.add(statsRow, BorderLayout.NORTH);
 
-        // Recent activity
+        
         recentPanel = UIHelper.darkPanel(new BorderLayout(0, 12));
         center.add(recentPanel, BorderLayout.CENTER);
 
@@ -43,13 +43,13 @@ public class AdminOverviewPanel extends JPanel {
     public void refresh() {
         statsRow.removeAll();
         statsRow.add(statCard("Teams Registered",
-            String.valueOf(ctrl.getTeams().size()), UIConstants.ACCENT, "👥"));
+            String.valueOf(ctrl.getTeams().size()), UIConstants.ACCENT, ""));
         statsRow.add(statCard("Managers",
-            String.valueOf(ctrl.getManagers().size()), UIConstants.SUCCESS, "🧑‍💼"));
+            String.valueOf(ctrl.getManagers().size()), UIConstants.SUCCESS, ""));
         statsRow.add(statCard("Matches Finished",
-            String.valueOf(ctrl.getTournament().getFinishedMatches().size()), UIConstants.WARNING, "✅"));
+            String.valueOf(ctrl.getTournament().getFinishedMatches().size()), UIConstants.WARNING, ""));
         statsRow.add(statCard("Upcoming Matches",
-            String.valueOf(ctrl.getTournament().getUpcomingMatches().size()), UIConstants.DANGER, "⏳"));
+            String.valueOf(ctrl.getTournament().getUpcomingMatches().size()), UIConstants.DANGER, ""));
 
         recentPanel.removeAll();
         JLabel sec = UIHelper.sectionLabel("TOURNAMENT STATUS");
@@ -88,44 +88,106 @@ public class AdminOverviewPanel extends JPanel {
         return p;
     }
 
-    private JPanel matchCard(Match m) {
-        JPanel p = new JPanel(new GridBagLayout());
-        p.setBackground(UIConstants.BG_CARD);
-        p.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(UIConstants.BORDER, 1),
-            BorderFactory.createEmptyBorder(16, 16, 16, 16)
-        ));
-        GridBagConstraints gc = new GridBagConstraints();
-        gc.fill  = GridBagConstraints.HORIZONTAL;
-        gc.gridx = 0; gc.gridy = 0; gc.insets = new Insets(0,0,6,0);
+   private JPanel matchCard(Match m) {
+    JPanel p = new JPanel(new GridBagLayout());
+    p.setBackground(UIConstants.BG_CARD);
+    p.setBorder(BorderFactory.createCompoundBorder(
+        BorderFactory.createLineBorder(UIConstants.BORDER, 1),
+        BorderFactory.createEmptyBorder(0, 0, 16, 0)
+    ));
 
-        // Round label
-        JLabel round = new JLabel(m.getRoundLabel().toUpperCase());
-        round.setFont(UIConstants.FONT_SMALL);
-        round.setForeground(UIConstants.ACCENT_LIGHT);
-        p.add(round, gc);
+    GridBagConstraints gc = new GridBagConstraints();
+    gc.fill = GridBagConstraints.HORIZONTAL;
+    gc.gridx = 0;
 
-        gc.gridy = 1;
-        Team t1 = ctrl.getTeamById(m.getTeam1Id());
-        Team t2 = ctrl.getTeamById(m.getTeam2Id());
-        String t1name = t1 != null ? t1.getName() : "TBD";
-        String t2name = t2 != null ? t2.getName() : "TBD";
+    // ── Pick image based on which match this is ───────────────────────
+    String imagePath;
+    if (m.getRound() == Match.Round.FINAL) {
+        imagePath = "/images/final.jpg";
+    } else if (m.getMatchNumber() == 1) {
+        imagePath = "/images/sf1.jpg";
+    } else {
+        imagePath = "/images/sf2.jpg";
+    }
 
-        JLabel vs = new JLabel("<html><b>" + t1name + "</b> vs <b>" + t2name + "</b></html>");
-        vs.setFont(UIConstants.FONT_BODY);
-        vs.setForeground(UIConstants.TEXT_PRIMARY);
-        p.add(vs, gc);
+    // ── Show the image at the top ─────────────────────────────────────
+    gc.gridy = 0;
+    gc.insets = new Insets(0, 0, 12, 0);
+    try {
+        java.net.URL imgUrl = getClass().getResource(imagePath);
+        if (imgUrl != null) {
+            ImageIcon raw = new ImageIcon(imgUrl);
+           int targetW = 300;
+int targetH = 120;
+double ratio = Math.min(
+    (double) targetW / raw.getIconWidth(),
+    (double) targetH / raw.getIconHeight()
+);
+int newW = (int) (raw.getIconWidth()  * ratio);
+int newH = (int) (raw.getIconHeight() * ratio);
+Image scaled = raw.getImage()
+    .getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
+            JLabel imgLabel = new JLabel(new ImageIcon(scaled));
+            imgLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            p.add(imgLabel, gc);
+        }
+    } catch (Exception e) {
+        
+    }
 
-        gc.gridy = 2; gc.insets = new Insets(8,0,0,0);
-        Color statusColor = m.isFinished() ? UIConstants.SUCCESS : UIConstants.WARNING;
-        String statusText = m.isFinished()
-            ? "Final Score: " + m.getScore1() + " - " + m.getScore2()
-            : "⏳ UPCOMING";
-        JLabel score = new JLabel(statusText);
-        score.setFont(UIConstants.FONT_TITLE);
-        score.setForeground(statusColor);
-        p.add(score, gc);
+   
+    gc.gridy = 1;
+    gc.insets = new Insets(0, 16, 6, 16);
+    JLabel round = new JLabel(m.getRoundLabel().toUpperCase());
+    round.setFont(UIConstants.FONT_SMALL);
+    round.setForeground(UIConstants.ACCENT_LIGHT);
+    p.add(round, gc);
 
-        return p;
+    // ── Team names 
+    gc.gridy = 2;
+String n1, n2;
+
+if (m.getRound() == Match.Round.FINAL) {
+    Tournament t    = ctrl.getTournament();
+    Match sf1       = t.getSemifinal1();
+    Match sf2       = t.getSemifinal2();
+
+    if (sf1 != null && sf1.isFinished() && sf1.getWinnerId() != null) {
+        Team w1 = ctrl.getTeamById(sf1.getWinnerId());
+        n1 = w1 != null ? w1.getName() : "TBD";
+    } else {
+        n1 = "TBD";
+    }
+
+    if (sf2 != null && sf2.isFinished() && sf2.getWinnerId() != null) {
+        Team w2 = ctrl.getTeamById(sf2.getWinnerId());
+        n2 = w2 != null ? w2.getName() : "TBD";
+    } else {
+        n2 = "TBD";
+    }
+} else {
+    Team t1 = ctrl.getTeamById(m.getTeam1Id());
+    Team t2 = ctrl.getTeamById(m.getTeam2Id());
+    n1 = t1 != null ? t1.getName() : "TBD";
+    n2 = t2 != null ? t2.getName() : "TBD";
+}
+    JLabel vs = new JLabel("<html><b>" + n1 + "</b> vs <b>" + n2 + "</b></html>");
+    vs.setFont(UIConstants.FONT_BODY);
+    vs.setForeground(UIConstants.TEXT_PRIMARY);
+    p.add(vs, gc);
+
+    // ── Score or upcoming 
+    gc.gridy = 3;
+    gc.insets = new Insets(8, 16, 0, 16);
+    Color statusColor = m.isFinished() ? UIConstants.SUCCESS : UIConstants.WARNING;
+    String statusText = m.isFinished()
+        ? "Final Score: " + m.getScore1() + " - " + m.getScore2()
+        : " UPCOMING";
+    JLabel score = new JLabel(statusText);
+    score.setFont(UIConstants.FONT_TITLE);
+    score.setForeground(statusColor);
+    p.add(score, gc);
+
+    return p;
     }
 }

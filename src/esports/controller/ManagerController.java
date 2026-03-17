@@ -34,6 +34,30 @@ public class ManagerController {
         m.setTeamId(id);
         return null;
     }
+    public String changeOwnPassword(String currentPassword, String newPassword) {
+    User u = session.getCurrentUser();
+    if (u == null) return "Not logged in.";
+    if (!esports.model.PasswordUtil.verify(currentPassword, u.getPassword()))
+        return "Current password is incorrect.";
+    if (newPassword == null || newPassword.trim().length() < 6)
+        return "New password must be at least 6 characters.";
+
+    String hashed = esports.model.PasswordUtil.hash(newPassword.trim());
+    String sql = "UPDATE users SET password = ? WHERE username = ?";
+    try {
+        java.sql.PreparedStatement ps =
+            esports.model.DatabaseConnection.getInstance().getConnection()
+            .prepareStatement(sql);
+        ps.setString(1, hashed);
+        ps.setString(2, u.getUsername());
+        ps.executeUpdate();
+        u.setPassword(hashed);
+        return null;
+    } catch (java.sql.SQLException e) {
+        e.printStackTrace();
+        return "Database error: " + e.getMessage();
+    }
+}
 
     /** Add a player to the current manager's team (persists to MySQL). */
     public String addPlayer(String name, String ign, String role) {

@@ -60,6 +60,7 @@ refresh();
         scrollManagers = new javax.swing.JScrollPane();
         tblManagers = new javax.swing.JTable();
         btnRemoveManager = new javax.swing.JButton();
+        btnResetPassword = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(9, 11, 19));
 
@@ -109,49 +110,44 @@ refresh();
         pnlForm.setLayout(pnlFormLayout);
         pnlFormLayout.setHorizontalGroup(
             pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlFormLayout.createSequentialGroup()
+                .addGap(141, 141, 141)
+                .addComponent(lblFormStatus)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(pnlFormLayout.createSequentialGroup()
+                .addGap(132, 132, 132)
+                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblPassword)
+                    .addComponent(lblUsername)
+                    .addComponent(lblFullName))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFormLayout.createSequentialGroup()
-                .addContainerGap(87, Short.MAX_VALUE)
+                .addContainerGap(96, Short.MAX_VALUE)
                 .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblFormTitle)
-                    .addGroup(pnlFormLayout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(tfFullName, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(pnlFormLayout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(pfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnRegister))))
-                .addGap(110, 110, 110))
-            .addGroup(pnlFormLayout.createSequentialGroup()
-                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlFormLayout.createSequentialGroup()
-                        .addGap(129, 129, 129)
-                        .addComponent(lblFullName))
-                    .addGroup(pnlFormLayout.createSequentialGroup()
-                        .addGap(141, 141, 141)
-                        .addComponent(lblFormStatus))
-                    .addGroup(pnlFormLayout.createSequentialGroup()
-                        .addGap(130, 130, 130)
-                        .addComponent(lblUsername))
-                    .addGroup(pnlFormLayout.createSequentialGroup()
-                        .addGap(131, 131, 131)
-                        .addComponent(lblPassword)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFormLayout.createSequentialGroup()
+                            .addComponent(btnRegister)
+                            .addGap(117, 117, 117))
+                        .addGroup(pnlFormLayout.createSequentialGroup()
+                            .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(pfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tfUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tfFullName, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addContainerGap()))))
         );
         pnlFormLayout.setVerticalGroup(
             pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlFormLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(43, 43, 43)
                 .addComponent(lblFormTitle)
                 .addGap(18, 18, 18)
                 .addComponent(lblFullName)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tfFullName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblUsername)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(12, 12, 12)
                 .addComponent(tfUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
                 .addComponent(lblPassword)
@@ -159,7 +155,7 @@ refresh();
                 .addComponent(pfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(btnRegister)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addComponent(lblFormStatus))
         );
 
@@ -169,8 +165,10 @@ refresh();
         lblTableTitle.setForeground(new java.awt.Color(148, 163, 184));
         lblTableTitle.setText("Registered Managers");
 
+        scrollManagers.setBackground(new java.awt.Color(0, 0, 0));
+
         tblManagers.setBackground(new java.awt.Color(20, 25, 44));
-        tblManagers.setForeground(new java.awt.Color(241, 245, 249));
+        tblManagers.setForeground(new java.awt.Color(255, 255, 255));
         tblManagers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -195,33 +193,46 @@ refresh();
         btnRemoveManager.setBorderPainted(false);
         btnRemoveManager.addActionListener(this::btnRemoveManagerActionPerformed);
 
+        btnResetPassword.setBackground(new java.awt.Color(245, 158, 11));
+        btnResetPassword.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnResetPassword.setForeground(new java.awt.Color(255, 255, 255));
+        btnResetPassword.setText("Reset Password");
+        btnResetPassword.setBorderPainted(false);
+        btnResetPassword.setFocusPainted(false);
+        btnResetPassword.addActionListener(this::btnResetPasswordActionPerformed);
+
         javax.swing.GroupLayout pnlTableLayout = new javax.swing.GroupLayout(pnlTable);
         pnlTable.setLayout(pnlTableLayout);
         pnlTableLayout.setHorizontalGroup(
             pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTableLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnRemoveManager)
-                .addGap(90, 90, 90))
             .addGroup(pnlTableLayout.createSequentialGroup()
                 .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlTableLayout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(scrollManagers, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(97, 97, 97)
+                        .addComponent(lblTableTitle)
+                        .addGap(0, 96, Short.MAX_VALUE))
                     .addGroup(pnlTableLayout.createSequentialGroup()
-                        .addGap(82, 82, 82)
-                        .addComponent(lblTableTitle)))
-                .addContainerGap(19, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(scrollManagers, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(pnlTableLayout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(btnRemoveManager)
+                .addGap(30, 30, 30)
+                .addComponent(btnResetPassword)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlTableLayout.setVerticalGroup(
             pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTableLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
+                .addGap(40, 40, 40)
                 .addComponent(lblTableTitle)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(scrollManagers, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnRemoveManager)
+                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRemoveManager)
+                    .addComponent(btnResetPassword))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
@@ -230,22 +241,23 @@ refresh();
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(pnlForm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(210, 210, 210))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(pnlForm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(pnlTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(83, 83, 83)
+                .addGap(43, 43, 43)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGap(58, 58, 58)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pnlForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -282,10 +294,58 @@ refresh();
     }
     }//GEN-LAST:event_btnRemoveManagerActionPerformed
 
+    private void btnResetPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetPasswordActionPerformed
+         int row = tblManagers.getSelectedRow();
+    if (row < 0) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+            "Please select a manager first.",
+            "No Selection", javax.swing.JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    String fullName = (String) tblManagers.getModel().getValueAt(row, 0);
+String username = (String) tblManagers.getModel().getValueAt(row, 1);
+
+    // Ask admin for new password
+    javax.swing.JPasswordField pf = new javax.swing.JPasswordField();
+    pf.setPreferredSize(new java.awt.Dimension(200, 36));
+
+    int result = javax.swing.JOptionPane.showConfirmDialog(
+        this,
+        new Object[]{
+            "Reset password for: " + fullName,
+            "Enter new password:", pf
+        },
+        "Reset Password",
+        javax.swing.JOptionPane.OK_CANCEL_OPTION,
+        javax.swing.JOptionPane.QUESTION_MESSAGE
+    );
+
+    if (result != javax.swing.JOptionPane.OK_OPTION) return;
+
+    String newPass = new String(pf.getPassword()).trim();
+    esports.controller.AdminController ctrl =
+        new esports.controller.AdminController();
+    String err = ctrl.resetManagerPassword(username, newPass);
+
+    if (err == null) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+            "Password reset successfully for " + fullName + ".\n" +
+            "They can now log in with the new password.",
+            "Success",
+            javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    } else {
+        javax.swing.JOptionPane.showMessageDialog(this,
+            "Error: " + err, "Failed",
+            javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_btnResetPasswordActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegister;
     private javax.swing.JButton btnRemoveManager;
+    private javax.swing.JButton btnResetPassword;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblFormStatus;
     private javax.swing.JLabel lblFormTitle;
